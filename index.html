@@ -19,14 +19,14 @@
       color: var(--text);
       min-height: 100vh; display: grid; place-items: start center; padding: 32px 16px;
     }
-    .wrap { width: 100%; max-width: 980px; }
+    .wrap { width: 100%; max-width: 1100px; }
     h1 { font-weight: 800; letter-spacing: 0.5px; margin: 0 0 4px; }
     p.lede { margin: 0 0 24px; color: var(--muted); }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 16px; }
     .card { background: linear-gradient(180deg, rgba(122,162,255,0.08), rgba(122,162,255,0.06) 30%, rgba(0,0,0,0.05));
-            border: 1px solid rgba(122,162,255,0.25); border-radius: 18px; padding: 16px 18px; box-shadow: 0 20px 60px rgba(0,0,0,0.35); }
+            border: 1px solid rgba(122,162,255,0.25); border-radius: 18px; padding: 24px; box-shadow: 0 20px 60px rgba(0,0,0,0.35); }
     .label { font-size: 13px; letter-spacing: 0.3px; color: var(--muted); text-transform: uppercase; }
-    .big   { font-size: 36px; font-variant-numeric: tabular-nums; font-weight: 800; margin-top: 6px; }
+    .big   { font-size: 48px; font-variant-numeric: tabular-nums; font-weight: 800; margin-top: 6px; }
     .sub   { font-size: 13px; color: var(--muted); margin-top: 6px; }
     .row { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
     .controls { margin: 18px 0 26px; padding: 16px; border: 1px dashed rgba(122,162,255,0.35); border-radius: 14px; }
@@ -103,13 +103,10 @@
 
     const JD_J2000 = 2451545.0; // 2000-01-01 12:00:00 TT
 
-    // Rough ΔT (TT - UT1) around mid-2025 ~ 69 s; TT - UTC = ΔAT (leaps) + 32.184s.
-    // We'll use an approximate TT-UTC = 69 + 32.184 ≈ 101.184 s for display purposes.
     const APPROX_TT_MINUS_UTC_S = 101.184;
 
     // ---------- Time helpers
     function toJulianDateUTC(dateUtc) {
-      // Algorithm: JD = (ms since 1970 UTC)/86400000 + 2440587.5
       return dateUtc.getTime() / MS_PER_DAY + 2440587.5;
     }
 
@@ -124,23 +121,18 @@
       return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
     }
 
-    // ---------- Earth: GMST (Greenwich Mean Sidereal Time)
     function gmstHours(dateUtc) {
-      // IAU 2006-ish expression using centuries since J2000 (UT1≈UTC here)
       const jd = toJulianDateUTC(dateUtc);
-      const T = (jd - JD_J2000) / 36525.0; // centuries
-      // GMST in seconds
+      const T = (jd - JD_J2000) / 36525.0;
       const gmstSec = 67310.54841 + (876600 * 3600 + 8640184.812866) * T + 0.093104 * T*T - 6.2e-6 * T*T*T;
-      const gmstHours = ((gmstSec / 3600) % 24 + 24) % 24; // wrap
+      const gmstHours = ((gmstSec / 3600) % 24 + 24) % 24;
       return gmstHours;
     }
 
-    // ---------- Mars: MSD & MTC (Airy‑0 @ 0°)
     function marsMSD(dateUtc, ttMinusUtcSeconds = APPROX_TT_MINUS_UTC_S) {
-      // Allison & McEwen (2000) style approximation
       const jdUTC = toJulianDateUTC(dateUtc);
-      const jdTT  = jdUTC + ttMinusUtcSeconds / 86400.0; // TT = UTC + (ΔAT + 32.184 + ΔUT1)
-      return (jdTT - 2405522.0028779) / 1.0274912517; // Mars Sol Date
+      const jdTT  = jdUTC + ttMinusUtcSeconds / 86400.0;
+      return (jdTT - 2405522.0028779) / 1.0274912517;
     }
 
     function marsMTC_Hours(dateUtc) {
@@ -148,19 +140,15 @@
       return 24.0 * frac(msd);
     }
 
-    // ---------- Mars: Sidereal (approx)
     function marsSiderealHours(dateUtc) {
-      // Use rotation angle since J2000 with Mars sidereal rate.
-      // Define epoch t0 at J2000 TT; approximate with UTC for display.
       const jdUTC = toJulianDateUTC(dateUtc);
-      const daysSinceJ2000 = jdUTC - JD_J2000; // days
+      const daysSinceJ2000 = jdUTC - JD_J2000;
       const secondsSinceJ2000 = daysSinceJ2000 * 86400.0;
-      const rotations = secondsSinceJ2000 / MARS_SIDEREAL_DAY_S; // turns
-      const siderealHours = (rotations % 1 + 1) % 1 * 24.0; // 0..24
+      const rotations = secondsSinceJ2000 / MARS_SIDEREAL_DAY_S;
+      const siderealHours = (rotations % 1 + 1) % 1 * 24.0;
       return siderealHours;
     }
 
-    // ---------- Display/update loop
     const el = {
       earthSolar: document.getElementById('earthSolar'),
       earthSidereal: document.getElementById('earthSidereal'),
@@ -172,7 +160,7 @@
 
     let marsSpeed = parseFloat(el.speed.value);
     let lastReal = performance.now();
-    let marsSimOffsetMs = 0; // how far ahead Mars clocks are from real UTC, in ms
+    let marsSimOffsetMs = 0;
 
     el.speed.addEventListener('input', () => {
       marsSpeed = parseFloat(el.speed.value);
@@ -180,34 +168,22 @@
     });
 
     function tick(now) {
-      const dt = now - lastReal; // ms real elapsed
+      const dt = now - lastReal;
       lastReal = now;
 
-      // Mars simulated offset advances by (speed - 1) times real dt.
       marsSimOffsetMs += dt * (marsSpeed - 1.0);
 
       const realUtc = new Date();
       const marsSimUtc = new Date(realUtc.getTime() + marsSimOffsetMs);
 
-      // Earth solar (UTC) — use real time
       el.earthSolar.textContent = realUtc.toISOString().substring(11, 19);
-
-      // Earth sidereal (GMST) from real UTC
-      const gmstH = gmstHours(realUtc);
-      el.earthSidereal.textContent = hmsFromHours(gmstH);
-
-      // Mars solar (MTC/LMST@0°) — use simulated Mars time base
-      const mtcH = marsMTC_Hours(marsSimUtc);
-      el.marsSolar.textContent = hmsFromHours(mtcH);
-
-      // Mars sidereal (@0°) — use simulated Mars time base
-      const msidH = marsSiderealHours(marsSimUtc);
-      el.marsSidereal.textContent = hmsFromHours(msidH);
+      el.earthSidereal.textContent = hmsFromHours(gmstHours(realUtc));
+      el.marsSolar.textContent = hmsFromHours(marsMTC_Hours(marsSimUtc));
+      el.marsSidereal.textContent = hmsFromHours(marsSiderealHours(marsSimUtc));
 
       requestAnimationFrame(tick);
     }
 
-    // kickoff
     el.speedLabel.textContent = marsSpeed.toFixed(2) + '×';
     lastReal = performance.now();
     requestAnimationFrame(tick);

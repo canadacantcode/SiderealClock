@@ -4,6 +4,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Mars & Earth — Sidereal / Solar Clocks</title>
+  <!-- Digital Clock Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,7 +33,14 @@
     .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 16px; }
     .card { background: var(--card); border: 1px solid rgba(148,163,184,0.15); border-radius: 16px; padding: 24px; box-shadow: 0 12px 30px rgba(0,0,0,0.35); }
     .label { font-size: 16px; font-weight: 700; letter-spacing: 0.2px; color: var(--text); text-transform: none; }
-    .big   { font-size: 56px; font-variant-numeric: tabular-nums; font-weight: 800; margin-top: 6px; }
+    .big {
+      font-size: 56px;
+      font-family: 'Orbitron', Arial, Helvetica, sans-serif;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 2px;
+      margin-top: 6px;
+    }
     .sub   { font-size: 13px; color: var(--muted); margin-top: 6px; }
     .row { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
     .controls { margin: 18px 0 26px; padding: 16px; border: 1px dashed rgba(122,162,255,0.35); border-radius: 14px; }

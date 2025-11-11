@@ -56,6 +56,8 @@
     a:hover { text-decoration: underline; }
   #bg{position:fixed; inset:0; z-index:-1; display:block;}
   .marsCard{border:1px solid var(--accent); box-shadow:0 0 12px rgba(255,77,77,0.35);} 
+  .redBorder{border:1px solid var(--accent)!important; box-shadow:0 0 12px rgba(255,77,77,0.35);} 
+.earthCard{border:1px solid #ffffff!important; box-shadow:0 0 12px rgba(255,255,255,0.18);} 
   </style>
 </head>
 <body>
@@ -64,7 +66,7 @@
     <h1>Mars & Earth — Sidereal / Solar Clocks</h1>
     <p class="lede">All times referenced to prime meridians (Earth: Greenwich, Mars: Airy‑0 at <span class="mono">0°</span> longitude). Mars clocks can run “fast” so a sol advances quicker on screen.</p>
 
-    <div class="controls">
+    <div class="controls redBorder">
       <div class="row">
         <div>
           <div class="label">Mars Clock Speed</div>
@@ -76,13 +78,13 @@
     </div>
 
     <div class="grid">
-      <div class="card">
+      <div class="card earthCard">
         <div class="label">Earth — Solar Time (Coordinated Universal Time)</div>
         <div class="big" id="earthSolar">--:--:--</div>
         <div class="sub">Civil (sun‑based) time using Coordinated Universal Time.</div>
       </div>
 
-      <div class="card">
+      <div class="card earthCard">
         <div class="label">Earth — Sidereal Time (Greenwich Mean Sidereal Time)</div>
         <div class="big" id="earthSidereal">--:--:--</div>
         <div class="sub">Greenwich Mean Sidereal Time, Earth’s rotation relative to the stars.</div>

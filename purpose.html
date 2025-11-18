@@ -2,105 +2,57 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Our Purpose — Jansky & Mars Time</title>
+  <title>Our Purpose — Jansky & Radio Astronomy</title>
+
+  <!-- Unique readable font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
   <style>
-    :root {
-      --bg: #0d1117;
-      --card: #0f172a;
-      --text: #e6edf3;
-      --muted: #94a3b8;
-      --accent: #ff4d4d;
-    }
-    * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: linear-gradient(180deg,#0d1117 0%, #0b1220 100%);
-      color: var(--text);
-      min-height: 100vh;
-      display: grid;
-      place-items: start center;
-      padding: 32px 16px;
-    }
-    .wrap { width: 100%; max-width: 900px; }
-
-    header {
-      width: 100%;
-      max-width: 900px;
-      margin: 0 auto 16px auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      padding: 32px;
+      font-family: 'Poppins', Arial, sans-serif;
+      background: #0d1117;
       color: #e6edf3;
     }
-    header nav { display: flex; gap: 16px; font-size: 14px; }
-    header a { color: inherit; text-decoration: none; opacity: 0.85; }
-    header a.active { border-bottom: 2px solid var(--accent); opacity: 1; }
-
-    .card {
-      background: var(--card);
-      border-radius: 16px;
-      padding: 24px 24px 20px;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
-      border: 1px solid rgba(148,163,184,0.2);
-    }
-    h1 { margin: 0 0 8px; font-size: 28px; }
-    h2 { margin: 20px 0 8px; font-size: 20px; }
-    p { margin: 8px 0; color: var(--muted); line-height: 1.5; }
-    ul { margin: 8px 0 8px 20px; color: var(--muted); }
-    strong { color: var(--text); }
+    nav { margin-bottom: 24px; font-size: 18px; }
+    a { color: #ff4d4d; text-decoration: none; font-weight: 600; }
+    a:hover { text-decoration: underline; }
+    h1 { font-size: 32px; margin-bottom: 10px; }
+    p { max-width: 750px; line-height: 1.6; }
   </style>
 </head>
+
 <body>
-  <header>
-    <div style="font-weight:700;">Mars & Earth Time</div>
-    <nav>
-      <a href="index.html">Clocks</a>
-      <a href="purpose.html" class="active">Our Purpose</a>
-    </nav>
-  </header>
+  <!-- Page Navigation -->
+  <nav>
+    <a href="index.html">🕒 Clocks</a> |
+    <a href="purpose.html">📡 Our Purpose</a>
+  </nav>
 
-  <div class="wrap">
-    <div class="card">
-      <h1>Our Purpose</h1>
-      <p>
-        This site is inspired by <strong>Karl Jansky</strong>, often called the
-        <strong>father of radio astronomy</strong>. By studying strange signals with a rotating
-        radio antenna, he accidentally discovered radio waves coming from the Milky Way.
-      </p>
+  <h1>Our Purpose — Why This Project Exists</h1>
+  <p>
+    This website helps explain Karl Jansky’s discovery of radio astronomy,
+    and how sidereal time connects Earth and Mars. We built this to make
+    space science easier to understand — not just for scientists, but for students,
+    teachers, and curious explorers.
+  </p>
 
-      <h2>Why we care about sidereal time</h2>
-      <p>
-        Jansky noticed that the “radio noise” he measured did not repeat every 24 hours.
-        Instead, it followed a <strong>sidereal day</strong>, which is slightly shorter and based
-        on the stars. This pattern showed that the signal was coming from space, not Earth.
-      </p>
-      <ul>
-        <li>Sidereal time repeats when the sky looks the same again.</li>
-        <li>It helped Jansky realize the source was the Milky Way.</li>
-      </ul>
+  <h2>What Karl Jansky Did</h2>
+  <ul>
+    <li>Discovered radio waves coming from space.</li>
+    <li>Tracked repeated peaks every sidereal day.</li>
+    <li>Laid the foundation for radio astronomy.</li>
+  </ul>
 
-      <h2>How this connects to Mars</h2>
-      <p>
-        Our Mars and Earth clocks show both solar and sidereal time, similar to how Jansky
-        compared the daily cycle of his antenna signal. For Mars, this helps us imagine how
-        future astronomers might track the sky from another planet.
-      </p>
-      <ul>
-        <li>Solar time follows the Sun in the sky.</li>
-        <li>Sidereal time follows the background stars.</li>
-      </ul>
+  <h2>Why Clocks Matter</h2>
+  <p>
+    Sidereal time showed that signals did not repeat every 24 hours — they
+    repeated every <strong>23 hours, 56 minutes</strong>. That was proof the
+    signal was coming from outside Earth.
+  </p>
 
-      <h2>Big idea</h2>
-      <p>
-        By visualizing these different clocks, we highlight how careful timing and rotation
-        measurements led Jansky to open an entirely new window on the universe: radio astronomy.
-      </p>
-    </div>
-  </div>
 </body>
 </html>

@@ -1,38 +1,88 @@
 <!DOCTYPE html>
+<!--
+  Layout, styling, and JavaScript structure were assisted by AI,
+  but the underlying research, equations, and time relationships
+  were researched and selected by Cole and Tushaar.  
+
+  We are currently working on:
+  - Adding 2D visual models for Mars/Earth to show a larger 
+    difference in the Mars times
+  - Updating the time calculations to make them more accurate
+    (including Mars’s orbit and timing data)
+-->
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Sidereal / Solar Clocks</title>
-  <!-- Digital Clock Font -->
+
+  <!-- Digital clock-style font for the large time readouts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
-  <!-- Fonts -->
+
+  <!-- Extra fonts (not heavily used right now, but kept for flexibility) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
   <style>
     :root {
+      /* Theme colors */
       --bg: #0d1117;
       --card: #0f172a;
       --text: #e6edf3;
       --muted: #94a3b8;
-      --accent: #ff4d4d;
+      --accent: #ff4d4d; /* red accent used for Mars + slider */
     }
+
     * { box-sizing: border-box; }
+
     body {
-      margin: 0; font-family: Arial, Helvetica, sans-serif;
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
       background: linear-gradient(180deg,#0d1117 0%, #0b1220 100%);
       color: var(--text);
-      min-height: 100vh; display: grid; place-items: start center; padding: 32px 16px;
+      min-height: 100vh;
+      display: grid;
+      place-items: start center;
+      padding: 32px 16px;
     }
+
     .wrap { width: 100%; max-width: 1100px; }
-    h1 { font-weight: 800; letter-spacing: 0.5px; margin: 0 0 4px; }
+
+    h1 {
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      margin: 0 0 4px;
+    }
+
     p.lede { margin: 0 0 24px; color: var(--muted); }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 16px; }
-    .card { background: var(--card); border: 1px solid rgba(148,163,184,0.15); border-radius: 16px; padding: 24px; box-shadow: 0 12px 30px rgba(0,0,0,0.35); }
-    .label { font-size: 16px; font-weight: 700; letter-spacing: 0.2px; color: var(--text); text-transform: none; }
+
+    /* Grid that holds the four clock cards (2 per row on wide screens) */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid rgba(148,163,184,0.15);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+    }
+
+    .label {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      color: var(--text);
+      text-transform: none;
+    }
+
+    /* Big digital clock numbers */
     .big {
       font-size: 56px;
       font-family: 'Orbitron', Arial, Helvetica, sans-serif;
@@ -41,30 +91,90 @@
       letter-spacing: 2px;
       margin-top: 6px;
     }
-    .sub   { font-size: 13px; color: var(--muted); margin-top: 6px; }
-    .row { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
-    .controls { margin: 18px 0 26px; padding: 16px; border: 1px dashed rgba(122,162,255,0.35); border-radius: 14px; }
-    input[type=range]{ width:100%; -webkit-appearance:none; height:4px; background:rgba(255,255,255,0.12); border-radius:999px; outline:none; }
-    input[type=range]::-webkit-slider-thumb{ -webkit-appearance:none; width:16px; height:16px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 3px rgba(255,77,77,0.25); border:none; }
-    input[type=range]::-moz-range-thumb{ width:16px; height:16px; border-radius:50%; background:var(--accent); border:none; }
-    input[type=range]::-webkit-slider-thumb{ -webkit-appearance:none; width:16px; height:16px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 3px rgba(125,211,252,0.25); border:none; }
-    input[type=range]::-moz-range-thumb{ width:16px; height:16px; border-radius:50%; background:var(--accent); border:none; }
+
+    .sub { font-size: 13px; color: var(--muted); margin-top: 6px; }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Mars speed slider container */
+    .controls {
+      margin: 18px 0 26px;
+      padding: 16px;
+      border: 1px dashed rgba(122,162,255,0.35);
+      border-radius: 14px;
+    }
+
+    /* Slider styling */
+    input[type=range]{
+      width:100%;
+      -webkit-appearance:none;
+      height:4px;
+      background:rgba(255,255,255,0.12);
+      border-radius:999px;
+      outline:none;
+    }
+    input[type=range]::-webkit-slider-thumb{
+      -webkit-appearance:none;
+      width:16px; height:16px;
+      border-radius:50%;
+      background:var(--accent);
+      box-shadow:0 0 0 3px rgba(255,77,77,0.25);
+      border:none;
+    }
+    input[type=range]::-moz-range-thumb{
+      width:16px; height:16px;
+      border-radius:50%;
+      background:var(--accent);
+      border:none;
+    }
+
     .mono { font-family: Arial, Helvetica, sans-serif; font-variant-numeric: tabular-nums; }
     .muted { color: var(--muted); }
-    .foot { margin-top: 24px; font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+    .foot {
+      margin-top: 24px;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
     a { color: var(--accent); text-decoration: none; }
     a:hover { text-decoration: underline; }
-  #bg{position:fixed; inset:0; z-index:-1; display:block;}
-  .marsCard{border:1px solid rgba(255,77,77,0.55)!important; box-shadow:0 0 10px rgba(255,77,77,0.35);}   
-  .redBorder{border:1px solid rgba(255,77,77,0.55)!important; box-shadow:0 0 10px rgba(255,77,77,0.35);}   
-.earthCard{border:1px solid rgba(255,255,255,0.45)!important; box-shadow:0 0 10px rgba(255,255,255,0.25);}   
+
+    /* Full-screen canvas used for the starry background */
+    #bg{
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      display:block;
+    }
+
+    /* Special borders for Mars and Earth cards + the slider box */
+    .marsCard{
+      border:1px solid rgba(255,77,77,0.55)!important;
+      box-shadow:0 0 10px rgba(255,77,77,0.35);
+    }
+    .redBorder{
+      border:1px solid rgba(255,77,77,0.55)!important;
+      box-shadow:0 0 10px rgba(255,77,77,0.35);
+    }
+    .earthCard{
+      border:1px solid rgba(255,255,255,0.45)!important;
+      box-shadow:0 0 10px rgba(255,255,255,0.25);
+    }
   </style>
 </head>
+
 <body>
-  <canvas id="bg"></canvas>
-<body>
+  <!-- Background canvas for simple star field animation -->
   <canvas id="bg"></canvas>
 
+  <!-- Simple top navigation: this page (Clocks) + a link to purpose.html -->
   <header style="width:100%; max-width:1100px; margin:0 auto 16px auto; display:flex; justify-content:space-between; align-items:center; color:#e6edf3; font-family: Arial, Helvetica, sans-serif;">
     <div style="font-weight:700;">Mars & Earth Time</div>
     <nav style="display:flex; gap:16px; font-size:14px;">
@@ -74,96 +184,144 @@
   </header>
 
   <div class="wrap">
-    <!-- your existing content here -->
-    
-  <div class="wrap">
     <h1>Sidereal / Solar Clocks</h1>
-    <p class="lede">All times referenced to prime meridians (Earth: Greenwich, Mars: Airy‑0 at <span class="mono">0°</span> longitude). Mars clocks can run faster so a sol advances quicker on screen.</p>
+    <p class="lede">
+      All times referenced to prime meridians (Earth: Greenwich, Mars: Airy-0 at
+      <span class="mono">0°</span> longitude). Mars clocks can run faster so a sol advances quicker on screen.
+    </p>
 
+    <!-- Mars speed control: scales how fast the Mars clocks advance visually -->
     <div class="controls redBorder">
       <div class="row">
         <div>
           <div class="label">Mars Clock Speed</div>
-          <div class="sub">Multiplies the passage of time for Mars clocks only (visualization aid).</div>
+          <div class="sub">
+            Multiplies the passage of time for Mars clocks only (visualization aid).
+          </div>
         </div>
         <div class="mono" id="speedLabel">1.00×</div>
       </div>
       <input id="speed" type="range" min="0.1" max="30" step="0.1" value="1" />
     </div>
 
+    <!-- MAIN CLOCK GRID: 4 clocks (Earth solar, Earth sidereal, Mars solar, Mars sidereal) -->
     <div class="grid">
+
+      <!-- EARTH SOLAR CLOCK: civil (UTC) time based on the Sun -->
       <div class="card earthCard">
         <div class="label">Earth — Solar Time</div>
         <div class="big" id="earthSolar">--:--:--</div>
-        <div class="sub">Civil (sun‑based) time using Coordinated Universal Time.</div>
+        <div class="sub">Civil (sun-based) time using Coordinated Universal Time.</div>
       </div>
 
+      <!-- EARTH SIDEREAL CLOCK: Earth's rotation relative to the stars (GMST) -->
       <div class="card earthCard">
         <div class="label">Earth — Sidereal Time</div>
         <div class="big" id="earthSidereal">--:--:--</div>
         <div class="sub">Greenwich Mean Sidereal Time, Earth’s rotation relative to the stars.</div>
       </div>
 
+      <!-- MARS SOLAR CLOCK: Mars Coordinated Time (MTC) at 0° longitude -->
       <div class="card marsCard">
         <div class="label">Mars — Solar Time</div>
         <div class="big" id="marsSolar">--:--:--</div>
-        <div class="sub">Mars Coordinated Time, the sun‑based time at 0° longitude (Airy‑0).</div>
+        <div class="sub">Mars Coordinated Time, the sun-based time at 0° longitude (Airy-0).</div>
       </div>
 
+      <!-- MARS SIDEREAL CLOCK: Mars's rotation relative to the stars at 0° -->
       <div class="card marsCard">
         <div class="label">Mars — Sidereal Time</div>
         <div class="big" id="marsSidereal">--:--:--</div>
         <div class="sub">Mars’s rotation relative to the stars, shown as a time value.</div>
       </div>
-    </div>
 
-    
-      
-      
     </div>
-    
+  </div>
 
+  <!-- Simple animated star background script (purely visual) -->
   <script>
-  (function(){
-    const c=document.getElementById('bg');
-    if(!c) return;
-    const ctx=c.getContext('2d');
-    let w,h,stars=[];
-    function resize(){ w=window.innerWidth; h=window.innerHeight; c.width=w; c.height=h; }
-    function rnd(n){ return Math.random()*n; }
-    function init(){ stars = Array.from({length: 140}, ()=>({x:rnd(w), y:rnd(h), r:Math.random()*1.5+0.2, s:Math.random()*0.6+0.2})); }
-    function draw(){
-      ctx.fillStyle='#0b1020'; ctx.fillRect(0,0,w,h);
-      ctx.fillStyle='rgba(255,255,255,0.9)';
-      for(const p of stars){ ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill(); p.y+=p.s*0.25; if(p.y>h){ p.y=-2; p.x=rnd(w);} }
-      requestAnimationFrame(draw);
-    }
-    window.addEventListener('resize', ()=>{ resize(); init(); });
-    resize(); init(); draw();
-  })();
-</script>
-<script>
-    // ---------- Constants
+    (function(){
+      const c = document.getElementById('bg');
+      if (!c) return;
+      const ctx = c.getContext('2d');
+      let w, h, stars = [];
+
+      function resize() {
+        w = window.innerWidth;
+        h = window.innerHeight;
+        c.width = w;
+        c.height = h;
+      }
+
+      function rnd(n){ return Math.random() * n; }
+
+      function init(){
+        stars = Array.from({length: 140}, () => ({
+          x: rnd(w),
+          y: rnd(h),
+          r: Math.random() * 1.5 + 0.2,
+          s: Math.random() * 0.6 + 0.2
+        }));
+      }
+
+      function draw(){
+        ctx.fillStyle = '#0b1020';
+        ctx.fillRect(0, 0, w, h);
+
+        ctx.fillStyle = 'rgba(255,255,255,0.9)';
+        for (const p of stars) {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fill();
+
+          // Move stars slowly downward; wrap to top
+          p.y += p.s * 0.25;
+          if (p.y > h) {
+            p.y = -2;
+            p.x = rnd(w);
+          }
+        }
+        requestAnimationFrame(draw);
+      }
+
+      window.addEventListener('resize', () => { resize(); init(); });
+      resize();
+      init();
+      draw();
+    })();
+  </script>
+
+  <!-- MAIN CLOCK LOGIC: Earth + Mars solar and sidereal times -->
+  <script>
+    // ---------- CONSTANTS ----------
+    // Basic time conversions
     const MS_PER_DAY = 86400000;
-    const EARTH_SIDEREAL_DAY_S = 86164.0905; // seconds
-    const EARTH_SOLAR_DAY_S    = 86400.0;    // seconds
 
-    const MARS_SOLAR_DAY_S     = 88775.244;  // 1 sol (seconds)
-    const MARS_SIDEREAL_DAY_S  = 88642.663;  // seconds
+    // Earth rotation times (seconds)
+    const EARTH_SIDEREAL_DAY_S = 86164.0905; // Earth sidereal day (~23h 56m)
+    const EARTH_SOLAR_DAY_S    = 86400.0;    // Earth solar day (24h)
 
+    // Mars rotation times (seconds)
+    const MARS_SOLAR_DAY_S     = 88775.244;  // 1 Martian sol (solar day)
+    const MARS_SIDEREAL_DAY_S  = 88642.663;  // Mars sidereal day
+
+    // J2000 epoch in Julian Date (reference moment used for angles)
     const JD_J2000 = 2451545.0; // 2000-01-01 12:00:00 TT
 
+    // Approximate TT - UTC (used to get a rough Mars Sol Date; display only)
     const APPROX_TT_MINUS_UTC_S = 101.184;
 
-    // ---------- Time helpers
+    // ---------- TIME HELPER FUNCTIONS ----------
     function toJulianDateUTC(dateUtc) {
+      // Convert JS Date (UTC) to Julian Date
       return dateUtc.getTime() / MS_PER_DAY + 2440587.5;
     }
 
     function frac(x) { return x - Math.floor(x); }
 
+    // Convert decimal hours to HH:MM:SS string
     function hmsFromHours(hours) {
-      hours = ((hours % 24) + 24) % 24; // wrap 0..24
+      hours = ((hours % 24) + 24) % 24; // wrap to 0..24
       const h = Math.floor(hours);
       const mFloat = (hours - h) * 60;
       const m = Math.floor(mFloat);
@@ -171,25 +329,33 @@
       return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
     }
 
+    // Earth sidereal time at Greenwich (GMST)
     function gmstHours(dateUtc) {
       const jd = toJulianDateUTC(dateUtc);
-      const T = (jd - JD_J2000) / 36525.0;
-      const gmstSec = 67310.54841 + (876600 * 3600 + 8640184.812866) * T + 0.093104 * T*T - 6.2e-6 * T*T*T;
+      const T = (jd - JD_J2000) / 36525.0; // centuries since J2000
+      const gmstSec =
+        67310.54841 +
+        (876600 * 3600 + 8640184.812866) * T +
+        0.093104 * T*T -
+        6.2e-6 * T*T*T;
       const gmstHours = ((gmstSec / 3600) % 24 + 24) % 24;
       return gmstHours;
     }
 
+    // Mars Sol Date (MSD) – approximate, for display
     function marsMSD(dateUtc, ttMinusUtcSeconds = APPROX_TT_MINUS_UTC_S) {
       const jdUTC = toJulianDateUTC(dateUtc);
       const jdTT  = jdUTC + ttMinusUtcSeconds / 86400.0;
       return (jdTT - 2405522.0028779) / 1.0274912517;
     }
 
+    // Mars Coordinated Time (MTC) in hours – solar time at 0° longitude
     function marsMTC_Hours(dateUtc) {
       const msd = marsMSD(dateUtc);
       return 24.0 * frac(msd);
     }
 
+    // Mars sidereal time in hours – rotation relative to stars
     function marsSiderealHours(dateUtc) {
       const jdUTC = toJulianDateUTC(dateUtc);
       const daysSinceJ2000 = jdUTC - JD_J2000;
@@ -199,47 +365,66 @@
       return siderealHours;
     }
 
+    // ---------- DOM ELEMENTS ----------
+    // Hook up JS to the four clock displays and the slider
     const el = {
-      earthSolar: document.getElementById('earthSolar'),
-      earthSidereal: document.getElementById('earthSidereal'),
-      marsSolar: document.getElementById('marsSolar'),
-      marsSidereal: document.getElementById('marsSidereal'),
-      speed: document.getElementById('speed'),
-      speedLabel: document.getElementById('speedLabel'),
+      earthSolar:   document.getElementById('earthSolar'),   // Earth solar clock display
+      earthSidereal:document.getElementById('earthSidereal'),// Earth sidereal clock display
+      marsSolar:    document.getElementById('marsSolar'),    // Mars solar clock display
+      marsSidereal: document.getElementById('marsSidereal'), // Mars sidereal clock display
+      speed:        document.getElementById('speed'),        // Mars speed slider
+      speedLabel:   document.getElementById('speedLabel'),   // Label showing current × value
     };
 
+    // ---------- MARS SPEED SIMULATION ----------
+    // marsSpeed scales how quickly the Mars clocks advance *on screen*.
+    // This only affects the visual animation, not the real Earth time.
     let marsSpeed = parseFloat(el.speed.value);
     let lastReal = performance.now();
-    let marsSimOffsetMs = 0;
+    let marsSimOffsetMs = 0; // simulated offset for Mars clocks, in ms
 
     el.speed.addEventListener('input', () => {
       marsSpeed = parseFloat(el.speed.value);
       el.speedLabel.textContent = marsSpeed.toFixed(2) + '×';
     });
 
+    // Main animation loop for updating all four clocks
     function tick(now) {
       const dt = now - lastReal;
       lastReal = now;
 
+      // This lets us see how the sols pass faster without changing the real-time base.
       marsSimOffsetMs += dt * (marsSpeed - 1.0);
 
-      const realUtc = new Date();
-      const marsSimUtc = new Date(realUtc.getTime() + marsSimOffsetMs);
+      const realUtc = new Date(); // actual current UTC
+      const marsSimUtc = new Date(realUtc.getTime() + marsSimOffsetMs); // simulated Mars time base
 
+      // EARTH SOLAR: direct UTC clock
       el.earthSolar.textContent = realUtc.toISOString().substring(11, 19);
+
+      // EARTH SIDEREAL: GMST based on real UTC
       el.earthSidereal.textContent = hmsFromHours(gmstHours(realUtc));
+
+      // MARS SOLAR: MTC based on simulated Mars time
       el.marsSolar.textContent = hmsFromHours(marsMTC_Hours(marsSimUtc));
+
+      // MARS SIDEREAL: sidereal rotation angle mapped to 24h
       el.marsSidereal.textContent = hmsFromHours(marsSiderealHours(marsSimUtc));
 
       requestAnimationFrame(tick);
     }
 
+    // Start the animation
     el.speedLabel.textContent = marsSpeed.toFixed(2) + '×';
     lastReal = performance.now();
     requestAnimationFrame(tick);
   </script>
-  <div class="foot" style="margin-top:24px; font-size:12px; color:#9ab0ff; line-height:1.5;">
-    This clock currently uses simplified calculations to estimate Earth and Mars rotation times. We plan to update it later with more accurate formulas that account for Mars’s elliptical orbit and improved timing data.
+
+  <!-- Note for visitors about future plans -->
+  <div class="foot">
+    This clock currently uses simplified calculations to estimate Earth and Mars rotation times.
+    We plan to update it later with more accurate formulas that account for Mars’s elliptical orbit
+    and improved timing data.
   </div>
 </body>
 </html>

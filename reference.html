@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>References — Mars & Earth Time</title>
+
+  <!-- Same fonts as index -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #0d1117;
+      --card: #0f172a;
+      --text: #e6edf3;
+      --muted: #94a3b8;
+      --accent: #ff4d4d;
+    }
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg,#0d1117 0%, #0b1220 100%);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 32px 16px;
+      display: grid;
+      place-items: start center;
+    }
+
+    .wrap {
+      width: 100%;
+      max-width: 1100px;
+    }
+
+    header {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto 16px auto;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      color:#e6edf3;
+    }
+
+    header .brand {
+      font-weight:700;
+    }
+
+    header nav {
+      display:flex;
+      gap:16px;
+      font-size:14px;
+    }
+
+    header nav a {
+      color:inherit;
+      text-decoration:none;
+      opacity:0.85;
+    }
+
+    header nav a.active {
+      border-bottom:2px solid var(--accent);
+      opacity:1;
+    }
+
+    h1 {
+      margin: 4px 0 8px;
+      font-size: 28px;
+    }
+
+    p.lede {
+      margin: 0 0 24px;
+      color: var(--muted);
+      max-width: 700px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 16px;
+      border: 1px solid rgba(148,163,184,0.25);
+      padding: 20px 22px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+      margin-bottom: 18px;
+    }
+
+    .card h2 {
+      margin: 0 0 8px;
+      font-size: 18px;
+    }
+
+    .card p {
+      margin: 4px 0;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .card ul {
+      margin: 6px 0 0 18px;
+      padding: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .card li {
+      margin-bottom: 4px;
+    }
+
+    .mono {
+      font-family: 'Orbitron', Arial, Helvetica, sans-serif;
+      font-variant-numeric: tabular-nums;
+    }
+
+    a.link {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    a.link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">Mars & Earth Time</div>
+      <nav>
+        <a href="index.html">Clocks</a>
+        <a href="purpose.html">Our Purpose</a>
+        <a href="reference.html" class="active">References</a>
+      </nav>
+    </header>
+
+    <h1>Reference & Sources</h1>
+    <p class="lede">
+      This page lists the main references we used to build our Mars and Earth sidereal and solar time clocks,
+      along with background on Karl Jansky and radio astronomy.
+    </p>
+
+    <div class="card">
+      <h2>Time & Astronomy References</h2>
+      <ul>
+        <li>Greenwich Mean Sidereal Time (GMST) formulas and J2000 epoch definitions from standard
+          astronomy references and IAU conventions.</li>
+        <li>Mars Sol Date (MSD) and Mars Coordinated Time (MTC) based on published Mars timekeeping
+          descriptions used by NASA mission teams.</li>
+        <li>Concepts of solar vs. sidereal day for both Earth and Mars from introductory astronomy textbooks.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Karl Jansky & Radio Astronomy</h2>
+      <ul>
+        <li>Historical information about Karl Jansky’s rotating antenna at Bell Telephone Laboratories in Holmdel, NJ,
+          and the discovery of radio noise from the direction of the Milky Way’s center.</li>
+        <li>Details on how Jansky noticed the signal repeating on a sidereal, not solar, schedule — with Bell Labs engineer
+          Marvin Skellett pointing out that the cycle matched sidereal time.</li>
+        <li>Background on how this discovery led to the birth of radio astronomy and later work on quasars,
+          radio galaxies, and the cosmic microwave background.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Our Own Work</h2>
+      <ul>
+        <li>Clock implementation and layout designed and coded by us, using simplified formulas to make the
+          sidereal and solar times easy to visualize.</li>
+        <li>We are currently working on adding 2D visual models and more accurate timing corrections
+          (like Mars’s elliptical orbit and improved timing data).</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>How the Site Is Built</h2>
+      <ul>
+        <li>Static site hosted with GitHub Pages, written in plain HTML, CSS, and JavaScript.</li>
+        <li>Parts of the layout and structure were assisted by an AI helper, but the astronomical research,
+          equations, and final time logic were developed by us.</li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

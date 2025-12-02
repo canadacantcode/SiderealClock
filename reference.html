@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>References — Mars & Earth Time</title>
 
-  <!-- Same fonts as index -->
+  <!-- Same font as clocks (for headings/numbers) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
@@ -104,10 +104,11 @@
       padding: 0;
       color: var(--muted);
       font-size: 14px;
+      line-height: 1.6;
     }
 
     .card li {
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
     .mono {
@@ -135,43 +136,45 @@
       </nav>
     </header>
 
-    <h1>Reference & Sources</h1>
+    <h1>References & Sources</h1>
     <p class="lede">
-      This page lists the main references we used to build our Mars and Earth sidereal and solar time clocks,
-      along with background on Karl Jansky and radio astronomy.
+      These are the main sources we used to build our Mars and Earth sidereal and solar time clocks,
+      and to learn about Karl Jansky and the history of radio astronomy.
     </p>
 
-<h2>References</h2>
-<ul style="line-height:1.6;">
-  <li>
-    <a href="https://en.wikipedia.org/wiki/Sidereal_time" target="_blank">
-      Sidereal Time — Wikipedia
-    </a>
-    — used to understand the fundamentals of sidereal time.
-  </li>
+    <!-- Box around the references -->
+    <div class="card">
+      <h2>Reference List</h2>
+      <ul>
+        <li>
+          <a class="link" href="https://en.wikipedia.org/wiki/Sidereal_time" target="_blank" rel="noopener">
+            Sidereal Time — Wikipedia
+          </a>
+          — used to understand the basics of sidereal time in general.
+        </li>
 
-  <li>
-    <a href="https://www.giss.nasa.gov/tools/mars24/help/algorithm.html" target="_blank">
-      NASA Mars24 Algorithm Documentation
-    </a>
-    — used for calculating Mars solar and sidereal time.
-  </li>
+        <li>
+          <a class="link" href="https://www.giss.nasa.gov/tools/mars24/help/algorithm.html" target="_blank" rel="noopener">
+            NASA Mars24 Algorithm Documentation
+          </a>
+          — used for calculating Mars solar time and approximate Mars sidereal time.
+        </li>
 
-  <li>
-    <a href="https://marsti.me/#faq" target="_blank">
-      MarsTI — Mars Time FAQ
-    </a>
-    — used for inspiration and understanding variables related to Mars timekeeping.
-  </li>
+        <li>
+          <a class="link" href="https://marsti.me/#faq" target="_blank" rel="noopener">
+            MarsTI — Mars Time FAQ
+          </a>
+          — used for inspiration and variable choices related to Mars timekeeping.
+        </li>
 
-  <li>
-    <a href="https://library.ohio-state.edu/cosmicsearch/V01I04/mybrotherkarljanksy.pdf" target="_blank">
-      *Cosmic Search*, Vol. 1, No. 4 — “My Brother Karl Jansky”
-    </a>
-    — used for historical background on Karl Jansky’s life and work.
-  </li>
-</ul>
-  </div>
+        <li>
+          <a class="link" href="https://library.ohio-state.edu/cosmicsearch/V01I04/mybrotherkarljanksy.pdf" target="_blank" rel="noopener">
+            <em>Cosmic Search</em>, Vol. 1, No. 4 — “My Brother Karl Jansky”
+          </a>
+          — used for historical background on Karl Jansky’s life and early radio astronomy.
+        </li>
+      </ul>
+    </div>
   </div>
 </body>
 </html>

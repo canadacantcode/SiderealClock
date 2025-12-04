@@ -4,30 +4,35 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Our Purpose — Jansky & Mars Time</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
   <style>
     :root {
-      --bg: #0d1117;
+      --bg: linear-gradient(180deg, #1a1f3c 0%, #2d3b67 50%, #1b233f 100%); /* new blue-purple blend */
       --card: #0f172a;
       --text: #e6edf3;
-      --muted: #94a3b8;
+      --muted: #b8c2d8; /* slightly brighter muted text */
       --accent: #ff4d4d;
     }
+
     * { box-sizing: border-box; }
+
     body {
       margin: 0;
       font-family: Arial, Helvetica, sans-serif;
-      background: linear-gradient(180deg,#0d1117 0%, #0b1220 100%);
+      background: var(--bg);
       color: var(--text);
       min-height: 100vh;
       display: grid;
       place-items: start center;
       padding: 32px 16px;
     }
-    .wrap { width: 100%; max-width: 900px; }
 
+    .wrap {
+      width: 100%;
+      max-width: 900px;
+    }
+
+    /* ---------------- HEADER (now matches index + reference sizing) ---------------- */
     header {
       width: 100%;
       max-width: 900px;
@@ -35,109 +40,141 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      color: #e6edf3;
+      color: var(--text);
+      font-size: 14px;                 /* ★ SAME AS OTHER PAGES */
     }
-    header nav { display: flex; gap: 16px; font-size: 14px; }
-    header a { color: inherit; text-decoration: none; opacity: 0.85; }
-    header a.active { border-bottom: 2px solid var(--accent); opacity: 1; }
 
+    header .brand {
+      font-size: 20px;                 /* ★ SAME AS REFERENCE PAGE */
+      font-weight: 700;
+    }
+
+    header nav {
+      display: flex;
+      gap: 16px;
+    }
+
+    header nav a {
+      color: inherit;
+      text-decoration: none;
+      font-size: 14px;                 /* ★ SAME AS OTHER PAGES */
+      opacity: 0.85;
+    }
+
+    header nav a.active {
+      border-bottom: 2px solid var(--accent);
+      opacity: 1;
+    }
+
+    /* ---------------- CARD ---------------- */
     .card {
       background: var(--card);
       border-radius: 16px;
       padding: 24px 24px 20px;
       box-shadow: 0 12px 30px rgba(0,0,0,0.35);
-      border: 1px solid rgba(148,163,184,0.2);
+      border: 1px solid rgba(148,163,184,0.25);
     }
-    h1 { margin: 0 0 8px; font-size: 28px; }
-    h2 { margin: 20px 0 8px; font-size: 20px; }
-    p { margin: 8px 0; color: var(--muted); line-height: 1.5; }
-    ul { margin: 8px 0 8px 20px; color: var(--muted); }
-    strong { color: var(--text); }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 28px;
+    }
+
+    h2 {
+      margin: 20px 0 8px;
+      font-size: 20px;
+    }
+
+    p {
+      margin: 8px 0;
+      color: var(--muted); /* brighter muted text */
+      line-height: 1.5;
+    }
+
+    /* ---------------- IMAGE GALLERY ---------------- */
+    .img-box {
+      background: #101a31;
+      padding: 16px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+      border: 1px solid rgba(148,163,184,0.22);
+    }
+
+    .img-box img {
+      width: 60%;
+      max-width: 350px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+    }
+
+    .img-box p {
+      font-size: 14px;
+      color: #b8c2d8;
+    }
   </style>
 </head>
+
 <body>
-<header style="
-    width:100%;
-    max-width:1100px;
-    margin:0 auto 16px auto;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    color:#e6edf3;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size:14px;">
-  
-  <div style="font-weight:700; font-size:20px;">
-    Mars & Earth Time
-  </div>
 
-  <nav style="display:flex; gap:16px; font-size:14px;">
-    <a href="index.html" style="color:inherit; text-decoration:none; opacity:0.8;">Clocks</a>
-    <a href="purpose.html" style="color:inherit; text-decoration:none; border-bottom:2px solid #ff4d4d;">Our Purpose</a>
-    <a href="reference.html" style="color:inherit; text-decoration:none; opacity:0.8;">References</a>
-  </nav>
-
-</header>
-
+  <!-- HEADER -->
+  <header>
+    <div class="brand">Mars & Earth Time</div>
+    <nav>
+      <a href="index.html">Clocks</a>
+      <a href="purpose.html" class="active">Our Purpose</a>
+      <a href="reference.html">References</a>
+    </nav>
+  </header>
 
   <div class="wrap">
     <div class="card">
       <h1>Our Purpose</h1>
+
       <p>
-        The Karl Jansky Memorial, located next to Nokia Bell Labs Homedel (40.36518° N, 74.16357° W), commemorates the discovery of the field of radio astronomy. At this location in 1931, Karl Jansky, a Bell Laboratories physicist and radio researcher, recorded for the first time radio signals from beyond the Earth. The source of these signals—radio noise of a wavelength of 14.6 meters—was the center of our Milky Way galaxy.  Marvin Skellet, a Bell Labs engineer, later observed that the signal repeated every sidereal day rather than every solar day — revealing that its origin was not terrestrial but galactic.
-This sculpture commemorates Jansky’s discovery, first announced in 1933, which gave birth to the science of radio astronomy. The sculpture is oriented as Jansky’s antenna was at 7:10 p.m. on September 16, 1932, a date and time when the antenna’s directional antenna rotated, and the center of our galaxy came into view in the direction of the constellation Sagittarius A on the southern horizon.
-Radio astronomy pioneer Karl Jansky died in 1950, years before the scientific significance of his discovery was fully recognized. In 1954, the International Astronomical Union gave his name to the international unit used to describe Jansky’s work led to major discoveries in astronomy, like the discovery of quasars, radio galaxies, and cosmic radio jets. In 1964, the Nobel Prize-winning discovery by Bell Laboratories scientists of the cosmic microwave background, which provided crucial understanding of the origin of our universe.
+        The Karl Jansky Memorial, located next to Nokia Bell Labs Holmdel 
+        (<strong>40.36518° N, 74.16357° W</strong>), commemorates the discovery of the field of radio astronomy.
+        At this location in 1931, Karl Jansky, a Bell Laboratories physicist and radio researcher, recorded
+        for the first time radio signals from beyond the Earth. The source of these signals—radio noise of a
+        wavelength of 14.6 meters—was the center of our Milky Way galaxy.
+        <br><br>
+        Marvin Skellet, a Bell Labs engineer, later observed that the signal repeated every sidereal day rather 
+        than every solar day — revealing that its origin was not terrestrial but galactic.
+        <br><br>
+        This sculpture commemorates Jansky’s discovery, first announced in 1933, which gave birth to the science 
+        of radio astronomy. The sculpture is oriented as Jansky’s antenna was at 7:10 p.m. on September 16, 1932, 
+        when the center of our galaxy came into view in the direction of the constellation Sagittarius A.
+        <br><br>
+        Karl Jansky died in 1950, years before the full importance of his discovery was recognized. In 1954,
+        the International Astronomical Union named the “jansky” in his honor. His work paved the way for major 
+        astronomical discoveries such as quasars, radio galaxies, and cosmic jets. In 1964, Bell Labs scientists 
+        Penzias and Wilson used the nearby Holmdel Horn Antenna to detect the cosmic microwave background, a 
+        discovery that reshaped modern cosmology.
       </p>
 
-
-          <!-- Image Gallery -->
-    <div style="width:100%; max-width:900px; margin:24px auto;">
-      <h2 style="color:#e6edf3; margin-bottom:12px;">Historic Images</h2>
+      <!-- IMAGE GALLERY -->
+      <h2>Historic Images</h2>
 
       <div style="display:flex; flex-direction:column; gap:24px;">
 
-
-        <!-- Jansky Photo Portrait -->
-        <div style="background:#0f172a; padding:16px; border-radius:12px; 
-                    box-shadow:0 8px 20px rgba(0,0,0,0.35); 
-                    border:1px solid rgba(148,163,184,0.18);">
-  <img src="Janskyphoto.jpg"
-       alt="Karl Jansky"
-       style="width:60%; max-width:350px; border-radius:8px; margin-bottom:16px;">
-          <p style="color:#94a3b8; margin-top:8px; font-size:14px;">
-            Karl Guthe Jansky, the Bell Labs physicist who founded radio astronomy.
-          </p>
+        <div class="img-box">
+          <img src="Janskyphoto.jpg" alt="Karl Jansky">
+          <p>Karl Guthe Jansky, the Bell Labs physicist who founded radio astronomy.</p>
         </div>
 
-        
-        <!-- Jansky at Work -->
-        <div style="background:#0f172a; padding:16px; border-radius:12px; 
-                    box-shadow:0 8px 20px rgba(0,0,0,0.35); 
-                    border:1px solid rgba(148,163,184,0.18);">
-  <img src="Janskyatwork.jpg"
-       alt="Jansky at work"
-       style="width:60%; max-width:350px; border-radius:8px; margin-bottom:16px;">
-          <p style="color:#94a3b8; margin-top:8px; font-size:14px;">
-            Karl Jansky working with the rotating antenna that detected galactic radio waves.
-          </p>
+        <div class="img-box">
+          <img src="Janskyatwork.jpg" alt="Jansky at work">
+          <p>Karl Jansky working with the rotating antenna that detected galactic radio waves.</p>
         </div>
 
-        <!-- Holmdel Horn Antenna -->
-        <div style="background:#0f172a; padding:16px; border-radius:12px; 
-                    box-shadow:0 8px 20px rgba(0,0,0,0.35); 
-                    border:1px solid rgba(148,163,184,0.18);">
-  <img src="HolmdelHorn.jpg"
-       alt="Holmdel Horn Antenna"
-       style="width:60%; max-width:350px; border-radius:8px;">
-          <p style="color:#94a3b8; margin-top:8px; font-size:14px;">
-            The Holmdel Horn Antenna — later used by Bell Labs scientists Penzias and Wilson to discover the cosmic microwave background.
-          </p>
+        <div class="img-box">
+          <img src="HolmdelHorn.jpg" alt="Holmdel Horn Antenna">
+          <p>The Holmdel Horn Antenna — later used to discover the cosmic microwave background.</p>
         </div>
-        
+
       </div>
-    </div>
 
     </div>
   </div>
+
 </body>
 </html>

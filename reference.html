@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>References — Mars & Earth Time</title>
 
-  <!-- Orbitron for consistency with the clocks site (optional here, but fine to keep) -->
+  <!-- Orbitron for numeric displays (consistent with rest of site) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
@@ -17,6 +17,10 @@
       --text: #e6edf3;
       --muted: #94a3b8;
       --accent: #ff4d4d;
+
+      /* Section-specific colors */
+      --article-bg: #14213d;      /* Brighter blue */
+      --article-outline: #4cc9f0; /* Cyan outline */
     }
 
     * { box-sizing: border-box; }
@@ -37,11 +41,11 @@
       max-width: 900px;
     }
 
-    /* HEADER – match index.html and purpose.html */
+    /* HEADER (matches clocks & purpose pages) */
     header {
-      width:100%;
-      max-width:1100px;
-      margin:0 auto 16px auto;
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto 16px auto;
       display:flex;
       justify-content:space-between;
       align-items:center;
@@ -55,77 +59,96 @@
       font-size:20px;
     }
 
-    header nav {
-      display:flex;
-      gap:16px;
+    nav a {
       font-size:14px;
-    }
-
-    header nav a {
       color:inherit;
       text-decoration:none;
-      opacity:0.8;
+      opacity:0.85;
     }
 
-    header nav a.active {
-      border-bottom:2px solid var(--accent);
+    nav a.active {
       opacity:1;
+      border-bottom:2px solid var(--accent);
     }
 
-    /* Page title + intro text */
     h1 {
-      margin: 10px 0 16px;
-      font-size: 28px;
-      font-weight: 700;
+      font-size:32px;
+      margin-bottom:6px;
+    }
+
+    h2 {
+      margin-top:28px;
+      margin-bottom:12px;
+      font-size:22px;
+      color: var(--text);
     }
 
     p.lede {
       color: var(--muted);
-      font-size: 16px;
-      margin-bottom: 24px;
-      line-height: 1.6;
+      font-size:16px;
+      max-width:700px;
+      line-height:1.5;
+      margin-bottom:28px;
     }
 
-    h2 {
-      margin: 18px 0 12px;
-      font-size: 20px;
-      font-weight: 600;
-    }
-
-    /* Reference Card Boxes */
+    /* Website reference cards */
     .ref-card {
       background: var(--card);
-      border: 1px solid rgba(255,255,255,0.35);
+      border: 1px solid rgba(255,255,255,0.25);
       border-radius: 14px;
       padding: 18px 20px;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.35);
     }
 
     .ref-card a {
-      font-size: 18px;
-      font-weight: 600;
+      font-size:18px;
+      font-weight:600;
       color: var(--accent);
-      text-decoration: none;
+      text-decoration:none;
     }
 
-    .ref-card a:hover {
-      text-decoration: underline;
-    }
+    .ref-card a:hover { text-decoration: underline; }
 
     .ref-card p {
       color: var(--muted);
-      font-size: 15px;
-      margin-top: 8px;
-      line-height: 1.5;
+      font-size:15px;
+      margin-top:6px;
+    }
+
+    /* ARTICLE CARDS (brighter, outlined) */
+    .article-card {
+      background: var(--article-bg);
+      border: 2px solid var(--article-outline);
+      border-radius: 14px;
+      padding: 18px 20px;
+      margin-bottom: 18px;
+      box-shadow: 0 10px 26px rgba(0,0,0,0.45);
+    }
+
+    .article-card a {
+      font-size:18px;
+      font-weight:700;
+      color: var(--article-outline);
+      text-decoration:none;
+    }
+
+    .article-card a:hover {
+      text-decoration: underline;
+    }
+
+    .article-card p {
+      color: #bcdfff;
+      font-size:15px;
+      margin-top:6px;
     }
   </style>
 </head>
 
 <body>
-  <!-- Shared header -->
   <header>
     <div class="brand">Mars & Earth Time</div>
+
     <nav>
       <a href="index.html">Clocks</a>
       <a href="purpose.html">Our Purpose</a>
@@ -134,45 +157,51 @@
   </header>
 
   <div class="wrap">
+
     <h1>Reference & Sources</h1>
     <p class="lede">
-      These are the key resources we used while researching and building our Mars and Earth time systems,
-      as well as learning about Karl Jansky and the history of radio astronomy.
+      These are the primary resources used to build the Mars & Earth time system and to research the history of Karl Jansky.
     </p>
 
-    <!-- Websites section -->
+    <!-- HISTORICAL ARTICLES SECTION -->
+    <h2>Historical Articles</h2>
+
+    <div class="article-card">
+      <a href="http://www.bigear.org/vol1no4/jansky.htm" target="_blank">
+        Cosmic Search Vol. 1, No. 4 — “My Brother Karl Jansky”
+      </a>
+      <p>
+        Used to learn about Karl Jansky’s life, early radio astronomy, and the story behind his discovery.
+      </p>
+    </div>
+
+    <!-- If you later want more articles, add more .article-card blocks here -->
+
+
+    <!-- WEBSITE REFERENCES SECTION -->
     <h2>Websites</h2>
 
     <div class="ref-card">
       <a href="https://en.wikipedia.org/wiki/Sidereal_time" target="_blank">
         Sidereal Time — Wikipedia
       </a>
-      <p>Used to understand the fundamentals of Earth sidereal time.</p>
+      <p>Used to understand Earth sidereal time and how it differs from solar time.</p>
     </div>
 
     <div class="ref-card">
       <a href="https://www.giss.nasa.gov/tools/mars24/help/algorithm.html" target="_blank">
         NASA Mars24 Algorithm Documentation
       </a>
-      <p>Used for calculating Mars solar and sidereal time formulas.</p>
+      <p>Primary source for Mars solar day, Mars Sol Date (MSD), and MTC time formulas.</p>
     </div>
 
     <div class="ref-card">
       <a href="https://marsti.me/#faq" target="_blank">
         MarsTI — Mars Time FAQ
       </a>
-      <p>Used for inspiration and to understand Mars time variables.</p>
+      <p>Used for inspiration and understanding how Mars timekeeping is approached by others.</p>
     </div>
 
-    <!-- Historical Articles section -->
-    <h2>Historical Articles</h2>
-
-    <div class="ref-card">
-      <a href="http://www.bigear.org/vol1no4/jansky.htm" target="_blank">
-        Cosmic Search Vol. 1, No. 4 — “My Brother Karl Jansky”
-      </a>
-      <p>Used to learn about Karl Jansky’s life, context of his discovery, and early radio astronomy history.</p>
-    </div>
   </div>
 </body>
 </html>

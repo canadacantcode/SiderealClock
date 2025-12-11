@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>References — Mars & Earth Time</title>
 
-  <!-- Orbitron for numbers (kept for consistency) -->
+  <!-- Orbitron for consistency with the clocks site (optional here, but fine to keep) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
@@ -37,17 +37,59 @@
       max-width: 900px;
     }
 
+    /* HEADER – match index.html and purpose.html */
+    header {
+      width:100%;
+      max-width:1100px;
+      margin:0 auto 16px auto;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      color:#e6edf3;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size:14px;
+    }
+
+    header .brand {
+      font-weight:700;
+      font-size:20px;
+    }
+
+    header nav {
+      display:flex;
+      gap:16px;
+      font-size:14px;
+    }
+
+    header nav a {
+      color:inherit;
+      text-decoration:none;
+      opacity:0.8;
+    }
+
+    header nav a.active {
+      border-bottom:2px solid var(--accent);
+      opacity:1;
+    }
+
+    /* Page title + intro text */
     h1 {
-      margin: 10px 0 20px;
-      font-size: 32px;
+      margin: 10px 0 16px;
+      font-size: 28px;
       font-weight: 700;
     }
 
     p.lede {
       color: var(--muted);
       font-size: 16px;
-      margin-bottom: 28px;
+      margin-bottom: 24px;
       line-height: 1.6;
+    }
+
+    h2 {
+      margin: 18px 0 12px;
+      font-size: 20px;
+      font-weight: 600;
     }
 
     /* Reference Card Boxes */
@@ -56,7 +98,7 @@
       border: 1px solid rgba(255,255,255,0.35);
       border-radius: 14px;
       padding: 18px 20px;
-      margin-bottom: 18px;
+      margin-bottom: 16px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.35);
     }
 
@@ -73,7 +115,7 @@
 
     .ref-card p {
       color: var(--muted);
-      font-size: 16px;
+      font-size: 15px;
       margin-top: 8px;
       line-height: 1.5;
     }
@@ -81,24 +123,26 @@
 </head>
 
 <body>
-  <!-- HEADER matches index.html -->
-  <header style="width:100%; max-width:1100px; margin:0 auto 16px auto; display:flex; justify-content:space-between; align-items:center; color:#e6edf3; font-family: Arial, Helvetica, sans-serif;">
-    <div style="font-weight:700;">Mars & Earth Time</div>
-    <nav style="display:flex; gap:16px; font-size:14px;">
-      <a href="index.html" style="color:inherit; text-decoration:none; opacity:0.8;">Clocks</a>
-      <a href="purpose.html" style="color:inherit; text-decoration:none; opacity:0.8;">Our Purpose</a>
-      <a href="reference.html" style="color:inherit; text-decoration:none; border-bottom:2px solid #ff4d4d;">References</a>
+  <!-- Shared header -->
+  <header>
+    <div class="brand">Mars & Earth Time</div>
+    <nav>
+      <a href="index.html">Clocks</a>
+      <a href="purpose.html">Our Purpose</a>
+      <a href="reference.html" class="active">References</a>
     </nav>
   </header>
 
   <div class="wrap">
-    <h1>Reference &amp; Sources</h1>
+    <h1>Reference & Sources</h1>
     <p class="lede">
       These are the key resources we used while researching and building our Mars and Earth time systems,
-      as well as learning about Karl Jansky and radio astronomy.
+      as well as learning about Karl Jansky and the history of radio astronomy.
     </p>
 
-    <!-- Reference Cards -->
+    <!-- Websites section -->
+    <h2>Websites</h2>
+
     <div class="ref-card">
       <a href="https://en.wikipedia.org/wiki/Sidereal_time" target="_blank">
         Sidereal Time — Wikipedia
@@ -120,11 +164,14 @@
       <p>Used for inspiration and to understand Mars time variables.</p>
     </div>
 
+    <!-- Historical Articles section -->
+    <h2>Historical Articles</h2>
+
     <div class="ref-card">
       <a href="http://www.bigear.org/vol1no4/jansky.htm" target="_blank">
         Cosmic Search Vol. 1, No. 4 — “My Brother Karl Jansky”
       </a>
-      <p>Used to learn about Karl Jansky’s life and historical background.</p>
+      <p>Used to learn about Karl Jansky’s life, context of his discovery, and early radio astronomy history.</p>
     </div>
   </div>
 </body>

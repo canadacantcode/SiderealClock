@@ -5,22 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>References — Mars & Earth Time</title>
 
-  <!-- Orbitron for numeric displays (consistent with rest of site) -->
+  <!-- Orbitron for numeric consistency -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --bg: #0d1117;
+      --bg-main: linear-gradient(180deg, #0e1430 0%, #0b1220 60%, #070b16 100%);
       --card: #0f172a;
       --text: #e6edf3;
       --muted: #94a3b8;
       --accent: #ff4d4d;
 
-      /* Section-specific colors */
-      --article-bg: #14213d;      /* Brighter blue */
-      --article-outline: #4cc9f0; /* Cyan outline */
+      /* Article section colors */
+      --article-bg: #162447;
+      --article-outline: #4cc9f0;
     }
 
     * { box-sizing: border-box; }
@@ -28,7 +28,7 @@
     body {
       margin: 0;
       font-family: Arial, Helvetica, sans-serif;
-      background: linear-gradient(180deg,#0d1117 0%, #0b1220 100%);
+      background: var(--bg-main);
       color: var(--text);
       min-height: 100vh;
       padding: 32px 16px;
@@ -41,11 +41,11 @@
       max-width: 900px;
     }
 
-    /* HEADER (matches clocks & purpose pages) */
+    /* HEADER — matches Clocks & Purpose exactly */
     header {
-      width: 100%;
-      max-width: 1100px;
-      margin: 0 auto 16px auto;
+      width:100%;
+      max-width:1100px;
+      margin:0 auto 16px auto;
       display:flex;
       justify-content:space-between;
       align-items:center;
@@ -59,11 +59,16 @@
       font-size:20px;
     }
 
-    nav a {
+    nav {
+      display:flex;
+      gap:16px;
       font-size:14px;
+    }
+
+    nav a {
       color:inherit;
       text-decoration:none;
-      opacity:0.85;
+      opacity:0.8;
     }
 
     nav a.active {
@@ -72,12 +77,12 @@
     }
 
     h1 {
-      font-size:32px;
-      margin-bottom:6px;
+      font-size:30px;
+      margin: 12px 0 6px;
     }
 
     h2 {
-      margin-top:28px;
+      margin-top:32px;
       margin-bottom:12px;
       font-size:22px;
       color: var(--text);
@@ -86,19 +91,19 @@
     p.lede {
       color: var(--muted);
       font-size:16px;
-      max-width:700px;
-      line-height:1.5;
+      max-width:720px;
+      line-height:1.55;
       margin-bottom:28px;
     }
 
-    /* Website reference cards */
+    /* WEBSITE REFERENCE CARDS */
     .ref-card {
       background: var(--card);
-      border: 1px solid rgba(255,255,255,0.25);
+      border: 1px solid rgba(255,255,255,0.22);
       border-radius: 14px;
       padding: 18px 20px;
       margin-bottom: 18px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+      box-shadow: 0 8px 22px rgba(0,0,0,0.35);
     }
 
     .ref-card a {
@@ -108,22 +113,25 @@
       text-decoration:none;
     }
 
-    .ref-card a:hover { text-decoration: underline; }
+    .ref-card a:hover {
+      text-decoration: underline;
+    }
 
     .ref-card p {
       color: var(--muted);
       font-size:15px;
       margin-top:6px;
+      line-height:1.45;
     }
 
-    /* ARTICLE CARDS (brighter, outlined) */
+    /* HISTORICAL ARTICLE CARDS */
     .article-card {
       background: var(--article-bg);
       border: 2px solid var(--article-outline);
       border-radius: 14px;
       padding: 18px 20px;
-      margin-bottom: 18px;
-      box-shadow: 0 10px 26px rgba(0,0,0,0.45);
+      margin-bottom: 20px;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.45);
     }
 
     .article-card a {
@@ -138,9 +146,10 @@
     }
 
     .article-card p {
-      color: #bcdfff;
+      color: #cfe7ff;
       font-size:15px;
       margin-top:6px;
+      line-height:1.45;
     }
   </style>
 </head>
@@ -148,7 +157,6 @@
 <body>
   <header>
     <div class="brand">Mars & Earth Time</div>
-
     <nav>
       <a href="index.html">Clocks</a>
       <a href="purpose.html">Our Purpose</a>
@@ -157,13 +165,13 @@
   </header>
 
   <div class="wrap">
-
-    <h1>Reference & Sources</h1>
+    <h1>References & Sources</h1>
     <p class="lede">
-      These are the primary resources used to build the Mars & Earth time system and to research the history of Karl Jansky.
+      The following sources were used to research sidereal and solar time on Earth and Mars,
+      as well as the historical context of Karl Jansky’s discovery and the origins of radio astronomy.
     </p>
 
-    <!-- HISTORICAL ARTICLES SECTION -->
+    <!-- HISTORICAL ARTICLES -->
     <h2>Historical Articles</h2>
 
     <div class="article-card">
@@ -171,49 +179,62 @@
         Cosmic Search Vol. 1, No. 4 — “My Brother Karl Jansky”
       </a>
       <p>
-        Used to learn about Karl Jansky’s life, early radio astronomy, and the story behind his discovery.
+        A first-hand historical account describing Karl Jansky’s work, his early experiments,
+        and the significance of discovering radio waves from the Milky Way.
       </p>
     </div>
 
-    <!-- If you later want more articles, add more .article-card blocks here -->
-
-
-    <!-- WEBSITE REFERENCES SECTION -->
+    <!-- WEBSITE REFERENCES -->
     <h2>Websites</h2>
 
     <div class="ref-card">
       <a href="https://en.wikipedia.org/wiki/Sidereal_time" target="_blank">
         Sidereal Time — Wikipedia
       </a>
-      <p>Used to understand Earth sidereal time and how it differs from solar time.</p>
+      <p>
+        Used to understand the definition of sidereal time and how Earth’s rotation relative
+        to distant stars differs from solar time.
+      </p>
     </div>
 
     <div class="ref-card">
       <a href="https://www.giss.nasa.gov/tools/mars24/help/algorithm.html" target="_blank">
         NASA Mars24 Algorithm Documentation
       </a>
-      <p>Primary source for Mars solar day, Mars Sol Date (MSD), and MTC time formulas.</p>
+      <p>
+        Primary technical reference for Mars Sol Date (MSD), Mars Coordinated Time (MTC),
+        and the mathematical framework behind Martian timekeeping.
+      </p>
     </div>
 
     <div class="ref-card">
       <a href="https://marsti.me/#faq" target="_blank">
         MarsTI — Mars Time FAQ
       </a>
-      <p>Used for inspiration and understanding how Mars timekeeping is approached by others.</p>
+      <p>
+        Provided inspiration and alternative explanations for Mars time concepts,
+        including sols, Mars clocks, and public-facing Mars time displays.
+      </p>
     </div>
 
     <div class="ref-card">
       <a href="https://en.wikipedia.org/wiki/Julian_day" target="_blank">
         Julian Day — Wikipedia
       </a>
-      <p>a.</p>
+      <p>
+        Used to understand Julian Date conventions and why they are commonly used
+        as a continuous time reference in astronomy and space science.
+      </p>
     </div>
 
     <div class="ref-card">
       <a href="https://aa.usno.navy.mil/data/siderealtime" target="_blank">
-        Astronomical Applications Department - Sidereal Time
+        U.S. Naval Observatory — Sidereal Time
       </a>
-      <p>a.</p>
+      <p>
+        Authoritative astronomical reference explaining sidereal time calculations
+        and their use in precise Earth rotation measurements.
+      </p>
     </div>
 
   </div>

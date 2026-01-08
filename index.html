@@ -216,6 +216,35 @@
       color: rgba(255,255,255,0.65);
       font-size: 12px;
     }
+
+    /* Dropdown arrow behavior */
+.detailsBox summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 12px;
+  font-weight: 700;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.detailsBox summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Arrow icon */
+.detailsBox .arrow {
+  font-size: 14px;
+  color: rgba(255,255,255,0.8);
+  transition: transform 0.25s ease;
+}
+
+/* Flip arrow when open */
+.detailsBox[open] .arrow {
+  transform: rotate(180deg); /* ▼ becomes ▲ */
+}
+
   </style>
 </head>
 
@@ -276,10 +305,11 @@
         <div class="sub">Mars Coordinated Time, the sun-based time at 0° longitude (Airy-0).</div>
 
         <details class="detailsBox">
-          <summary>
-            Solar Time Visual
-            <span class="hint">(click)</span>
-          </summary>
+    <summary>
+  <span>Solar Time Visual</span>
+  <span class="arrow">▼</span>
+</summary>
+
           <div class="content">
             This section will later show a 2D visualization of the Sun-based Martian day (a sol),
             synced to the Mars Solar Time clock above.
@@ -298,9 +328,10 @@
 
         <details class="detailsBox">
           <summary>
-            Sidereal Time Visual
-            <span class="hint">(click)</span>
-          </summary>
+  <span>Sidereal Time Visual</span>
+  <span class="arrow">▼</span>
+</summary>
+
           <div class="content">
             This section will later show a 2D visualization of Mars rotating relative to the stars
             (sidereal rotation), synced to the Mars Sidereal Time clock above.

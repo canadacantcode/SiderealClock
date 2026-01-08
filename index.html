@@ -26,14 +26,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 
+  <!-- ✅ p5.js library (required to run your sketch) -->
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script>
+
   <style>
     :root {
-      /* Theme colors */
       --bg: #0d1117;
       --card: #0f172a;
       --text: #e6edf3;
       --muted: #94a3b8;
-      --accent: #ff4d4d; /* red accent used for Mars + slider */
+      --accent: #ff4d4d;
     }
 
     * { box-sizing: border-box; }
@@ -51,15 +53,9 @@
 
     .wrap { width: 100%; max-width: 1100px; }
 
-    h1 {
-      font-weight: 800;
-      letter-spacing: 0.5px;
-      margin: 0 0 4px;
-    }
-
+    h1 { font-weight: 800; letter-spacing: 0.5px; margin: 0 0 4px; }
     p.lede { margin: 0 0 24px; color: var(--muted); }
 
-    /* Grid that holds the four clock cards (2 per row on wide screens) */
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
@@ -82,7 +78,6 @@
       text-transform: none;
     }
 
-    /* Big digital clock numbers */
     .big {
       font-size: 56px;
       font-family: 'Orbitron', Arial, Helvetica, sans-serif;
@@ -101,7 +96,6 @@
       gap: 12px;
     }
 
-    /* Mars speed slider container */
     .controls {
       margin: 18px 0 26px;
       padding: 16px;
@@ -109,7 +103,6 @@
       border-radius: 14px;
     }
 
-    /* Slider styling */
     input[type=range]{
       width:100%;
       -webkit-appearance:none;
@@ -146,7 +139,6 @@
     a { color: var(--accent); text-decoration: none; }
     a:hover { text-decoration: underline; }
 
-    /* Full-screen canvas used for the starry background */
     #bg{
       position:fixed;
       inset:0;
@@ -154,7 +146,6 @@
       display:block;
     }
 
-    /* Special borders for Mars and Earth cards + the slider box */
     .marsCard{
       border:1px solid rgba(255,77,77,0.55)!important;
       box-shadow:0 0 10px rgba(255,77,77,0.35);
@@ -168,7 +159,7 @@
       box-shadow:0 0 10px rgba(255,255,255,0.25);
     }
 
-    /* ---------- NEW: Dropdowns inside Mars cards ---------- */
+    /* Dropdowns */
     .detailsBox {
       margin-top: 14px;
       border: 1px solid rgba(255,77,77,0.35);
@@ -180,21 +171,14 @@
     .detailsBox summary {
       cursor: pointer;
       list-style: none;
-      padding: 12px 12px;
+      padding: 12px;
       font-weight: 700;
       color: var(--text);
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
-
     .detailsBox summary::-webkit-details-marker { display: none; }
-
-    .detailsBox summary .hint {
-      font-weight: 600;
-      font-size: 12px;
-      color: rgba(255,255,255,0.7);
-    }
 
     .detailsBox .content {
       padding: 12px 12px 14px;
@@ -204,10 +188,11 @@
       line-height: 1.45;
     }
 
+    /* Placeholder / canvas holder */
     .animPlaceholder {
       margin-top: 10px;
       width: 100%;
-      height: 180px;
+      height: 220px;
       border-radius: 10px;
       border: 1px dashed rgba(255,77,77,0.45);
       background: rgba(0,0,0,0.18);
@@ -215,44 +200,25 @@
       place-items: center;
       color: rgba(255,255,255,0.65);
       font-size: 12px;
+      overflow: hidden;
+      position: relative;
     }
 
-    /* Dropdown arrow behavior */
-.detailsBox summary {
-  cursor: pointer;
-  list-style: none;
-  padding: 12px;
-  font-weight: 700;
-  color: var(--text);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.detailsBox summary::-webkit-details-marker {
-  display: none;
-}
-
-/* Arrow icon */
-.detailsBox .arrow {
-  font-size: 14px;
-  color: rgba(255,255,255,0.8);
-  transition: transform 0.25s ease;
-}
-
-/* Flip arrow when open */
-.detailsBox[open] .arrow {
-  transform: rotate(180deg); /* ▼ becomes ▲ */
-}
-
+    /* Arrow icon */
+    .detailsBox .arrow {
+      font-size: 14px;
+      color: rgba(255,255,255,0.8);
+      transition: transform 0.25s ease;
+    }
+    .detailsBox[open] .arrow {
+      transform: rotate(180deg);
+    }
   </style>
 </head>
 
 <body>
-  <!-- Background canvas for simple star field animation -->
   <canvas id="bg"></canvas>
 
-  <!-- Top navigation -->
   <header style="width:100%; max-width:1100px; margin:0 auto 16px auto; display:flex; justify-content:space-between; align-items:center; color:#e6edf3; font-family: Arial, Helvetica, sans-serif; font-size:14px;">
     <div style="font-weight:700; font-size:20px;">Mars & Earth Time</div>
     <nav style="display:flex; gap:16px; font-size:14px;">
@@ -269,7 +235,6 @@
       <span class="mono">0°</span> longitude). Mars clocks can run faster so a sol advances quicker on screen.
     </p>
 
-    <!-- Mars speed control -->
     <div class="controls redBorder">
       <div class="row">
         <div>
@@ -281,140 +246,52 @@
       <input id="speed" type="range" min="0.1" max="30" step="0.1" value="1" />
     </div>
 
-    <!-- MAIN CLOCK GRID -->
     <div class="grid">
 
-      <!-- EARTH SOLAR -->
       <div class="card earthCard">
         <div class="label">Earth — Solar Time</div>
         <div class="big" id="earthSolar">--:--:--</div>
         <div class="sub">Civil (sun-based) time using Coordinated Universal Time.</div>
       </div>
 
-      <!-- EARTH SIDEREAL -->
       <div class="card earthCard">
         <div class="label">Earth — Sidereal Time</div>
         <div class="big" id="earthSidereal">--:--:--</div>
         <div class="sub">Greenwich Mean Sidereal Time, Earth’s rotation relative to the stars.</div>
       </div>
 
-      <!-- MARS SOLAR + DROPDOWN -->
       <div class="card marsCard">
         <div class="label">Mars — Solar Time</div>
         <div class="big" id="marsSolar">--:--:--</div>
         <div class="sub">Mars Coordinated Time, the sun-based time at 0° longitude (Airy-0).</div>
 
         <details class="detailsBox">
-    <summary>
-  <span>Solar Time Visual</span>
-  <span class="arrow">▼</span>
-</summary>
-
+          <summary>
+            <span>Solar Time Visual</span>
+            <span class="arrow">▼</span>
+          </summary>
           <div class="content">
             This section will later show a 2D visualization of the Sun-based Martian day (a sol),
             synced to the Mars Solar Time clock above.
-            <div class="animPlaceholder">
-              2D animation placeholder (coming soon)
-            </div>
+            <div class="animPlaceholder">2D animation placeholder (coming soon)</div>
           </div>
         </details>
       </div>
 
-      <!-- MARS SIDEREAL + DROPDOWN -->
       <div class="card marsCard">
         <div class="label">Mars — Sidereal Time</div>
         <div class="big" id="marsSidereal">--:--:--</div>
         <div class="sub">Mars’s rotation relative to the stars, shown as a time value.</div>
 
-        <details class="detailsBox">
+        <details class="detailsBox" id="siderealDetails">
           <summary>
-  <span>Sidereal Time Visual</span>
-  <span class="arrow">▼</span>
-</summary>
+            <span>Sidereal Time Visual</span>
+            <span class="arrow">▼</span>
+          </summary>
 
           <div class="content">
-            This section will later show a 2D visualization of Mars rotating relative to the stars
-            (sidereal rotation), synced to the Mars Sidereal Time clock above.
-            <div class="anim">
-              let angle = 0;
-
-function setup() {
-  angleMode(DEGREES);
-  createCanvas(400, 400);
-}
-
-function draw() {
-   
-  background(" rgb(28,28,46) ");
-  frameRate(15); //set frame rate to 15
-   sv = frameCount % 8;
-   if (sv > 41) {
-     
-     sv = frameCount % -8
-   }
-     
-  stroke("orange");
-  strokeWeight(sv);
- fill("yellow");
- circle(200, 0, 300)
-  cloudOneX = frameCount % width
-
- 
-   stroke("");
-  strokeWeight(sv+5);
- fill("yellow");
- circle(200, 0, 290)
-  cloudOneX = frameCount % width
- 
- 
-  fill(255) //white text
-
-  textSize(10);
-  strokeWeight(0)
-  text(`mouseX: ${mouseX}, mouseY: ${mouseY}`, 20, 20);
- 
-  translate(200,250);
-  if (angle <= 360) {
-    rotate(angle);
-  }
-  circle(0, 0, 75);
-  stroke("red");
-  strokeWeight(1);
-  ellipseMode(CENTER);
-  line(0, 0, 0, 100);
- 
-  stroke("black");
-  circle(0, 0, 75);
-  stroke("red");
-  strokeWeight(1);
-  line(0, 0, 0, 100);
- 
- 
- 
-   if (angle <= 400) {
-    rotate(angle);
-  }
-  circle(0, 0, 75);
-  stroke("red");
-  strokeWeight(1);
-  ellipseMode(CENTER);
-  line(0, 0, 0, 100);
- 
-  stroke("black");
-  circle(0, 0, 75);
-  stroke("red");
-  strokeWeight(1);
-  line(0, 0, 0, 100);
- 
- 
-    angle = angle + 2;
-
- 
- 
- 
-}
-
-            </div>
+            This section runs a p5.js sketch showing a rotating “pointer” (rotation relative to the stars).
+            <div id="marsSiderealP5" class="animPlaceholder"></div>
           </div>
         </details>
       </div>
@@ -422,7 +299,7 @@ function draw() {
     </div>
   </div>
 
-  <!-- Star background script (purely visual) -->
+  <!-- Star background script -->
   <script>
     (function(){
       const c = document.getElementById('bg');
@@ -474,7 +351,6 @@ function draw() {
 
   <!-- MAIN CLOCK LOGIC -->
   <script>
-    // ---------- CONSTANTS ----------
     const MS_PER_DAY = 86400000;
 
     const EARTH_SIDEREAL_DAY_S = 86164.0905;
@@ -486,7 +362,6 @@ function draw() {
     const JD_J2000 = 2451545.0;
     const APPROX_TT_MINUS_UTC_S = 101.184;
 
-    // ---------- HELPERS ----------
     function toJulianDateUTC(dateUtc) {
       return dateUtc.getTime() / MS_PER_DAY + 2440587.5;
     }
@@ -530,7 +405,6 @@ function draw() {
       return ((rotations % 1 + 1) % 1) * 24.0;
     }
 
-    // ---------- DOM ----------
     const el = {
       earthSolar:   document.getElementById('earthSolar'),
       earthSidereal:document.getElementById('earthSidereal'),
@@ -540,7 +414,6 @@ function draw() {
       speedLabel:   document.getElementById('speedLabel'),
     };
 
-    // ---------- MARS SPEED SIM ----------
     let marsSpeed = parseFloat(el.speed.value);
     let lastReal = performance.now();
     let marsSimOffsetMs = 0;
@@ -570,6 +443,82 @@ function draw() {
     el.speedLabel.textContent = marsSpeed.toFixed(2) + '×';
     lastReal = performance.now();
     requestAnimationFrame(tick);
+  </script>
+
+  <!-- ✅ p5.js sketch mounted inside the dropdown -->
+  <script>
+    let siderealSketch = null;
+
+    function startSiderealP5() {
+      if (siderealSketch) return;
+
+      const mount = document.getElementById('marsSiderealP5');
+      if (!mount) return;
+
+      siderealSketch = new p5((p) => {
+        let angle = 0;
+
+        p.setup = () => {
+          p.angleMode(p.DEGREES);
+          const w = mount.clientWidth || 420;
+          const h = mount.clientHeight || 220;
+          const cnv = p.createCanvas(w, h);
+          cnv.parent(mount);
+          p.frameRate(30);
+        };
+
+        p.windowResized = () => {
+          const w = mount.clientWidth || 420;
+          const h = mount.clientHeight || 220;
+          p.resizeCanvas(w, h);
+        };
+
+        p.draw = () => {
+          p.background(28, 28, 46);
+
+          // simple "star" dots
+          p.noStroke();
+          p.fill(255, 255, 255, 160);
+          for (let i = 0; i < 25; i++) {
+            p.circle((i * 37) % p.width, (i * 53) % p.height, 2);
+          }
+
+          // center
+          p.translate(p.width/2, p.height/2 + 10);
+
+          // planet circle
+          p.stroke(0);
+          p.fill(200);
+          p.circle(0, 0, 80);
+
+          // pointer
+          p.stroke(255, 77, 77);
+          p.strokeWeight(2);
+          p.push();
+          p.rotate(angle);
+          p.line(0, 0, 0, -90);
+          p.pop();
+
+          angle = (angle + 2) % 360;
+        };
+      });
+    }
+
+    function stopSiderealP5() {
+      if (!siderealSketch) return;
+      siderealSketch.remove();
+      siderealSketch = null;
+      const mount = document.getElementById('marsSiderealP5');
+      if (mount) mount.innerHTML = "";
+    }
+
+    const details = document.getElementById('siderealDetails');
+    if (details) {
+      details.addEventListener('toggle', () => {
+        if (details.open) startSiderealP5();
+        else stopSiderealP5();
+      });
+    }
   </script>
 
   <div class="foot">

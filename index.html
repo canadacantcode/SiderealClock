@@ -335,8 +335,85 @@
           <div class="content">
             This section will later show a 2D visualization of Mars rotating relative to the stars
             (sidereal rotation), synced to the Mars Sidereal Time clock above.
-            <div class="animPlaceholder">
-              2D animation placeholder (coming soon)
+            <div class="anim">
+              let angle = 0;
+
+function setup() {
+  angleMode(DEGREES);
+  createCanvas(400, 400);
+}
+
+function draw() {
+   
+  background(" rgb(28,28,46) ");
+  frameRate(15); //set frame rate to 15
+   sv = frameCount % 8;
+   if (sv > 41) {
+     
+     sv = frameCount % -8
+   }
+     
+  stroke("orange");
+  strokeWeight(sv);
+ fill("yellow");
+ circle(200, 0, 300)
+  cloudOneX = frameCount % width
+
+ 
+   stroke("");
+  strokeWeight(sv+5);
+ fill("yellow");
+ circle(200, 0, 290)
+  cloudOneX = frameCount % width
+ 
+ 
+  fill(255) //white text
+
+  textSize(10);
+  strokeWeight(0)
+  text(`mouseX: ${mouseX}, mouseY: ${mouseY}`, 20, 20);
+ 
+  translate(200,250);
+  if (angle <= 360) {
+    rotate(angle);
+  }
+  circle(0, 0, 75);
+  stroke("red");
+  strokeWeight(1);
+  ellipseMode(CENTER);
+  line(0, 0, 0, 100);
+ 
+  stroke("black");
+  circle(0, 0, 75);
+  stroke("red");
+  strokeWeight(1);
+  line(0, 0, 0, 100);
+ 
+ 
+ 
+   if (angle <= 400) {
+    rotate(angle);
+  }
+  circle(0, 0, 75);
+  stroke("red");
+  strokeWeight(1);
+  ellipseMode(CENTER);
+  line(0, 0, 0, 100);
+ 
+  stroke("black");
+  circle(0, 0, 75);
+  stroke("red");
+  strokeWeight(1);
+  line(0, 0, 0, 100);
+ 
+ 
+    angle = angle + 2;
+
+ 
+ 
+ 
+}
+
             </div>
           </div>
         </details>

@@ -26,9 +26,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 
-  <!-- ✅ p5.js library (required to run your sketch) -->
-  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script>
-
   <style>
     :root {
       --bg: #0d1117;
@@ -188,7 +185,6 @@
       line-height: 1.45;
     }
 
-    /* Placeholder / canvas holder */
     .animPlaceholder {
       margin-top: 10px;
       width: 100%;
@@ -204,7 +200,6 @@
       position: relative;
     }
 
-    /* Arrow icon */
     .detailsBox .arrow {
       font-size: 14px;
       color: rgba(255,255,255,0.8);
@@ -271,8 +266,6 @@
             <span class="arrow">▼</span>
           </summary>
           <div class="content">
-            This section will later show a 2D visualization of the Sun-based Martian day (a sol),
-            synced to the Mars Solar Time clock above.
             <div class="animPlaceholder">2D animation placeholder (coming soon)</div>
           </div>
         </details>
@@ -283,15 +276,14 @@
         <div class="big" id="marsSidereal">--:--:--</div>
         <div class="sub">Mars’s rotation relative to the stars, shown as a time value.</div>
 
-        <details class="detailsBox" id="siderealDetails">
+        <details class="detailsBox">
           <summary>
             <span>Sidereal Time Visual</span>
             <span class="arrow">▼</span>
           </summary>
 
           <div class="content">
-            This section runs a p5.js sketch showing a rotating “pointer” (rotation relative to the stars).
-            <div id="marsSiderealP5" class="animPlaceholder"></div>
+            <div class="animPlaceholder">2D animation placeholder (coming soon)</div>
           </div>
         </details>
       </div>
@@ -443,82 +435,6 @@
     el.speedLabel.textContent = marsSpeed.toFixed(2) + '×';
     lastReal = performance.now();
     requestAnimationFrame(tick);
-  </script>
-
-  <!-- ✅ p5.js sketch mounted inside the dropdown -->
-  <script>
-    let siderealSketch = null;
-
-    function startSiderealP5() {
-      if (siderealSketch) return;
-
-      const mount = document.getElementById('marsSiderealP5');
-      if (!mount) return;
-
-      siderealSketch = new p5((p) => {
-        let angle = 0;
-
-        p.setup = () => {
-          p.angleMode(p.DEGREES);
-          const w = mount.clientWidth || 420;
-          const h = mount.clientHeight || 220;
-          const cnv = p.createCanvas(w, h);
-          cnv.parent(mount);
-          p.frameRate(30);
-        };
-
-        p.windowResized = () => {
-          const w = mount.clientWidth || 420;
-          const h = mount.clientHeight || 220;
-          p.resizeCanvas(w, h);
-        };
-
-        p.draw = () => {
-          p.background(28, 28, 46);
-
-          // simple "star" dots
-          p.noStroke();
-          p.fill(255, 255, 255, 160);
-          for (let i = 0; i < 25; i++) {
-            p.circle((i * 37) % p.width, (i * 53) % p.height, 2);
-          }
-
-          // center
-          p.translate(p.width/2, p.height/2 + 10);
-
-          // planet circle
-          p.stroke(0);
-          p.fill(200);
-          p.circle(0, 0, 80);
-
-          // pointer
-          p.stroke(255, 77, 77);
-          p.strokeWeight(2);
-          p.push();
-          p.rotate(angle);
-          p.line(0, 0, 0, -90);
-          p.pop();
-
-          angle = (angle + 2) % 360;
-        };
-      });
-    }
-
-    function stopSiderealP5() {
-      if (!siderealSketch) return;
-      siderealSketch.remove();
-      siderealSketch = null;
-      const mount = document.getElementById('marsSiderealP5');
-      if (mount) mount.innerHTML = "";
-    }
-
-    const details = document.getElementById('siderealDetails');
-    if (details) {
-      details.addEventListener('toggle', () => {
-        if (details.open) startSiderealP5();
-        else stopSiderealP5();
-      });
-    }
   </script>
 
   <div class="foot">

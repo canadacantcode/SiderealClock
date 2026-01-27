@@ -1,43 +1,78 @@
-let orbitAngle = 0;
-let spinAngle = 0;
+let aangle = 0;
+
+let bangle = 0;
 
 function setup() {
   angleMode(DEGREES);
-  createCanvas(400, 220);
+  createCanvas(400, 400);
 }
 
 function draw() {
-  background(15, 20, 40);
-  frameRate(15);
+  background(" rgb(28,28,46) ");
+  frameRate(15); //set frame rate to 15
+  sv = frameCount % 8;
+  if (sv > 41) {
+    sv = frameCount % -8;
+  }
+push();
+  stroke("orange");
+  strokeWeight(sv);
+  fill("yellow");
+  circle(200, 200, 50);
+  cloudOneX = frameCount % width;
 
-  // Sun
-  fill(255, 200, 80);
-  noStroke();
-  circle(200, 110, 40);
+  textSize(20);
+  strokeWeight(1);
+  stroke("black");
+  text("Sun", 183, 205);
 
-  fill(0);
-  textSize(12);
-  textAlign(CENTER, CENTER);
-  text("Sun", 200, 110);
+  fill(255); //white text
 
-  // Mars orbiting
+  textSize(10);
+  strokeWeight(0);
+  text(`mouseX: ${mouseX}, mouseY: ${mouseY}`, 20, 20);
+pop();
+  
+  
+push();
+  translate(200, 200);
+  if (aangle) {
+    rotate(aangle);
+  }
+
+  stroke("black");
+  fill("orange");
+  circle(75, 75, 25);
+  stroke("red");
+  strokeWeight(1);
+  line(0, 0, 0, 100);
+
   push();
-  translate(200, 110);
-  rotate(orbitAngle);
-
-  fill(255, 120, 60);
-  circle(80, 0, 20);
-
-  // Mars rotation hand (solar)
+  translate(75,75)
+  rotate(bangle)
+  fill("red");
+  
+  line(0, 0, 0, 50);
+  
+  pop();  
+  
+  
   push();
-  translate(80, 0);
-  rotate(spinAngle);
-  stroke(255, 80, 80);
-  line(0, 0, 0, -20);
+  translate(75,75)
+  rotate(-aangle)
+  translate(10, 10);
+  textSize(20);
+  fill("black");
+  stroke("orange");
+  strokeWeight(1);
+  text("Mars", -30, -25);
+  
+
+  
+  pop();
+  
   pop();
 
-  pop();
-
-  orbitAngle += 2;
-  spinAngle += 67;
+ bangle = bangle +67;
+  aangle = aangle + 2;
 }

@@ -1,40 +1,69 @@
 let angle = 0;
 
+
+
 function setup() {
   angleMode(DEGREES);
-  createCanvas(400, 220);
+  createCanvas(400, 400);
 }
 
 function draw() {
-  background(15, 20, 40);
-  frameRate(15);
+  
+  let marsImg;
 
-  // Distant stars reference (top)
-  stroke(200);
-  strokeWeight(1);
-  for (let x = 40; x < width; x += 60) {
-    point(x, 30);
+function preload() {
+  marsImg = loadImage("mars.png"); // exact filename!
+}
+  
+  background(" rgb(28,28,46) ");
+  frameRate(15); //set frame rate to 15
+  sv = frameCount % 8;
+  if (sv > 41) {
+    sv = frameCount % -8;
   }
 
-  // Mars rotating in place (sidereal)
+  stroke("orange");
+  strokeWeight(sv);
+  fill("yellow");
+  circle(200, 0, 300);
+  cloudOneX = frameCount % width;
+
+  stroke("");
+  strokeWeight(sv + 5);
+  fill("yellow");
+  circle(200, 0, 280);
+  cloudOneX = frameCount % width;
+
+  textSize(50);
+  strokeWeight(10);
+  stroke("white");
+  text("Sun", 150, 75);
+
+  fill(255); //white text
+
+  textSize(10);
+  strokeWeight(0);
+  text(`mouseX: ${mouseX}, mouseY: ${mouseY}`, 20, 20);
+
   push();
-  translate(200, 120);
-  rotate(angle);
+  translate(200, 250);
+  if (angle) {
+    rotate(angle);
+  }
+  fill("orange");
+  circle(0, 0, 75);
+  stroke("red");
+  strokeWeight(1);
+  ellipseMode(CENTER);
+  line(0, 0, 0, 100);
 
-  noStroke();
-  fill(255, 120, 60);
-  circle(0, 0, 40);
-
-  stroke(255, 80, 80);
-  line(0, 0, 0, -40);
 
   pop();
 
-  fill(200);
-  noStroke();
-  textAlign(CENTER);
-  textSize(12);
-  text("Fixed stars reference", 200, 18);
+  textSize(20);
+  stroke("black");
+  strokeWeight(1);
+  text("Mars", 178, 260);
 
-  angle += 2;
+  angle = angle + 2;
 }
